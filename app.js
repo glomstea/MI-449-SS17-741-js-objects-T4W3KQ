@@ -1,9 +1,9 @@
 // Local Storage retrieval
-var jokes = window.localStorage.getItem('jokes')
+var jokes = JSON.parse(window.localStorage.getItem('jokes'))
 // ----
 // DATA start
 // ----
-if (!jokes || isNaN(jokes)) {
+if (jokes.length === 0) {
   jokes = {
     'the horse': {
       setup: 'A horse walks into the bar. The bartender asks...',
@@ -15,13 +15,10 @@ if (!jokes || isNaN(jokes)) {
     }
   }
 }
-
 // The message to display if the jokes object is empty
 var noJokesMessage = 'I... I don\'t know any jokes. 😢'
 // The message if no match is found
 var noJokeFound = 'No matching joke found.'
-// The message for existing jokes
-var existingJokeFound = 'Joke updated'
 
 // -------------
 // PAGE UPDATERS
@@ -43,8 +40,6 @@ var updateJokesMenu = function () {
 var requestedJokeInput = document.getElementById('requested-joke')
 // Get joke box
 var jokeBox = document.getElementById('joke-box')
-var removeBox = document.getElementById('remove-box')
-var addBox = document.getElementById('add-box')
 // Update the discard jokeBox
 var dislikeJokeInput = document.getElementById('dislike')
 var discardJokePrompt = document.getElementById('discard')
@@ -53,7 +48,6 @@ var addJokeInput = document.getElementById('addition')
 var addJokePromt = document.getElementById('add')
 var addJokeSetup = document.getElementById('setup')
 var addJokePunchline = document.getElementById('punchline')
-
 // ADD JOKE
 var addJoke = function () {
   var addJokeKey = addJokeInput.value
@@ -64,12 +58,11 @@ var addJoke = function () {
 
   for (var i = 0; i < length; i++) {
     if (addJokeKey === jokeKeys[i]) {
-      addBox.textContent = existingJokeFound
       break
     } else {
       jokes[addJokeKey] = {'setup': setup, 'punchline': punchline}
-      addBox.textContent = addJokeKey + ': ' + setup + ' ' + punchline
-      window.localStorage.setItem('jokes', jokes)
+      var stringifiedJokes = JSON.stringify(jokes)
+      window.localStorage.setItem('jokes', stringifiedJokes)
     }
   }
   updatePage()
@@ -83,12 +76,12 @@ var removeJoke = function () {
 
   for (var i = 0; i < length; i++) {
     if (discardJokeKey === jokeKeys[i]) {
-      removeBox.textContent = jokeKeys[i]
       delete jokes[jokeKeys[i]]
-      window.localStorage.setItem('jokes', jokes)
+
+      var stringifiedJokes = JSON.stringify(jokes)
+      window.localStorage.setItem('jokes', stringifiedJokes)
       break
     } else {
-      removeBox.textContent = noJokeFound
     }
   }
   updatePage()
@@ -103,7 +96,7 @@ var updateDisplayedJoke = function () {
 
   for (var i = 0; i < length; i++) {
     if (requestedJokeKey === jokeKeys[i]) {
-      jokeBox.textContent = jokes[requestedJokeKey]['setup'] + ' ' + jokes[requestedJokeKey]['punchline']
+      jokeBox.textContent = jokes[requestedJokeKey]['setup'] + '\n' + jokes[requestedJokeKey]['punchline']
       break
     } else {
       jokeBox.textContent = noJokeFound
@@ -125,7 +118,6 @@ var updatePage = function () {
 
 // Update the page immediately on startup
 updatePage()
-
 // ---------------
 // EVENT LISTENERS
 // ---------------

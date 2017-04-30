@@ -5,15 +5,7 @@
     <title>Joke-a-tron 9000</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
-    <!--When the requestedJokeInput has a value matching the key of an existing joke, the jokeBox HTML is updated in this format
-
-        When the requestedJokeInput does not match an existing joke, the jokeBox content is updated to No matching joke found.
-
-        When the Remember this joke! button is clicked, a new joke is saved (or overwritten) in the jokes object, using the data in the associated input/textarea elements
-
-        When the Forget about it! button is clicked, the joke with that key (if any) is deleted from the jokes object
-
-        Whenever the jokes object changes, the new version is saved in localStorage and used whenever the user visits the page again
+    <!--Whenever the jokes object changes, the new version is saved in localStorage and used whenever the user visits the page again
 
         It's impossible for an error to ever occur in the JavaScript console-->
   </head>
@@ -55,10 +47,6 @@
           <button id="add" class="u-full-width">
             Remember this joke!
           </button>
-          <div id="add-box">
-            <p>SETUP</p>
-            <p>PUNCHLINE</p>
-          </div>
         </div>
         <div class="six columns">
           <h2>Erase my memory 😢</h2>
@@ -69,10 +57,6 @@
           <button id="discard" class="u-full-width">
             Forget about it!
           </button>
-          <div id="remove-box">
-            <p>SETUP</p>
-            <p>PUNCHLINE</p>
-          </div>
         </div>
       </div>
     </div>
