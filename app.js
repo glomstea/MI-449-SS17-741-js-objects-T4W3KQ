@@ -1,9 +1,9 @@
 // Local Storage retrieval
-var jokes = parseInt(window.localStorage.getItem('jokes'))
+var jokes = window.localStorage.getItem('jokes')
 // ----
 // DATA start
 // ----
-if (!jokes) {
+if (!jokes || isNaN(jokes)) {
   jokes = {
     'the horse': {
       setup: 'A horse walks into the bar. The bartender asks...',
@@ -69,27 +69,10 @@ var addJoke = function () {
     } else {
       jokes[addJokeKey] = {'setup': setup, 'punchline': punchline}
       addBox.textContent = addJokeKey + ': ' + setup + ' ' + punchline
+      window.localStorage.setItem('jokes', jokes)
     }
   }
-  window.localStorage.setItem('jokes', jokes)
   updatePage()
-}
-
-var updateDisplayedJoke = function () {
-  var requestedJokeKey = requestedJokeInput.value
-  var jokeKeys = Object.keys(jokes)
-
-  var length = jokeKeys.length
-
-  for (var i = 0; i < length; i++) {
-    if (requestedJokeKey === jokeKeys[i]) {
-      // jokeBox.textContent = jokeKeys[i]
-      jokeBox.textContent = jokes[requestedJokeKey]['setup'] + ' ' + jokes[requestedJokeKey]['punchline']
-      break
-    } else {
-      jokeBox.textContent = noJokeFound // jokeKeys[1]
-    }
-  }
 }
 
 // REMOVE JOKE
@@ -102,14 +85,30 @@ var removeJoke = function () {
     if (discardJokeKey === jokeKeys[i]) {
       removeBox.textContent = jokeKeys[i]
       delete jokes[jokeKeys[i]]
+      window.localStorage.setItem('jokes', jokes)
       break
     } else {
       removeBox.textContent = noJokeFound
     }
   }
-  window.localStorage.setItem('jokes', jokes)
   updatePage()
+}
 
+// UPDATE JOKEBOX
+var updateDisplayedJoke = function () {
+  var requestedJokeKey = requestedJokeInput.value
+  var jokeKeys = Object.keys(jokes)
+
+  var length = jokeKeys.length
+
+  for (var i = 0; i < length; i++) {
+    if (requestedJokeKey === jokeKeys[i]) {
+      jokeBox.textContent = jokes[requestedJokeKey]['setup'] + ' ' + jokes[requestedJokeKey]['punchline']
+      break
+    } else {
+      jokeBox.textContent = noJokeFound
+    }
+  }
 }
 
 // Function to keep track of all other
