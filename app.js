@@ -6,7 +6,7 @@ var jokes = window.localStorage.getItem('jokes')
 // ----
 // DATA start
 // ----
-if (!jokes) {
+if (!jokes || Object.keys(jokes).lenth === 0) {
   jokes = {
     'the horse': {
       setup: 'A horse walks into the bar. The bartender asks...',
