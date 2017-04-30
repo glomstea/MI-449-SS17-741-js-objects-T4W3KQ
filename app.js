@@ -6,7 +6,7 @@ testBox.textContent = Object.keys(jokes)
 // ----
 // DATA start
 // ----
-if (Object.keys(jokes).length === 0) {
+if (!jokes) {
   jokes = {
     'the horse': {
       setup: 'A horse walks into the bar. The bartender asks...',
