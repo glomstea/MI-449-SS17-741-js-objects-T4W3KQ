@@ -1,8 +1,8 @@
 // Local Storage retrieval
 // Testbox
-var testBox = document.getElementById('test-box')
-var jokes = JSON.parse(window.localStorage.getItem('jokes'))
-testBox.textContent = Object.keys(jokes)
+// var testBox = document.getElementById('test-box')
+var jokes = window.localStorage.getItem('jokes')
+// testBox.textContent = Object.keys(jokes)
 // ----
 // DATA start
 // ----
@@ -17,6 +17,8 @@ if (!jokes) {
       punchline: 'With an asteroid belt.'
     }
   }
+} else {
+  jokes = JSON.parse(jokes)
 }
 var test2Box = document.getElementById('test2-box')
 test2Box.textContent = Object.keys(jokes)
