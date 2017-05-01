@@ -1,9 +1,6 @@
 // Local Storage retrieval
-// Testbox
-// window.localStorage.clear()
-var testBox = document.getElementById('test-box')
 var jokes = window.localStorage.getItem('jokes')
-testBox.textContent = jokes
+
 // ----
 // DATA start
 // ----
@@ -21,8 +18,6 @@ if (jokes === null) {
 } else {
   jokes = JSON.parse(jokes)
 }
-var test2Box = document.getElementById('test2-box')
-test2Box.textContent = Object.keys(jokes)
 // The message to display if the jokes object is empty
 var noJokesMessage = 'I... I don\'t know any jokes. 😢'
 // The message if no match is found
