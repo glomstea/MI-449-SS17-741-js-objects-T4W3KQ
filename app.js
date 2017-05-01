@@ -1,12 +1,12 @@
 // Local Storage retrieval
 // Testbox
 var testBox = document.getElementById('test-box')
-var jokes = window.localStorage.getItem('jokes')
-testBox.textContent = jokes
+var jokes = JSON.parse(window.localStorage.getItem('jokes'))
+testBox.textContent = Object.keys(jokes)
 // ----
 // DATA start
 // ----
-if (!jokes || Object.keys(jokes).lenth === 0 || isNaN(jokes)) {
+if (Object.keys(jokes).length === 0 && joke.constructor === Object) {
   jokes = {
     'the horse': {
       setup: 'A horse walks into the bar. The bartender asks...',
@@ -17,8 +17,6 @@ if (!jokes || Object.keys(jokes).lenth === 0 || isNaN(jokes)) {
       punchline: 'With an asteroid belt.'
     }
   }
-} else {
-  jokes = JSON.parse(jokes)
 }
 var test2Box = document.getElementById('test2-box')
 test2Box.textContent = Object.keys(jokes)
