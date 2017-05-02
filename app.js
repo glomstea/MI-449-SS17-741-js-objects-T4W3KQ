@@ -44,7 +44,8 @@ var updateJokesMenu = function () {
 // Update the displayed joke, based on the requested joke
 var requestedJokeInput = document.getElementById('requested-joke')
 // Get joke box
-var jokeBox = document.getElementById('joke-box')
+var jokeBox = document.getElementById('joke1-box')
+var jokeBox2 = document.getElementById('joke2-box')
 var removeBox = document.getElementById('remove-box')
 var addBox = document.getElementById('add-box')
 // Update the discard jokeBox
@@ -55,25 +56,21 @@ var addJokeInput = document.getElementById('addition')
 var addJokePromt = document.getElementById('add')
 var addJokeSetup = document.getElementById('setup')
 var addJokePunchline = document.getElementById('punchline')
+
 // ADD JOKE
 var addJoke = function () {
   var addJokeKey = addJokeInput.value
   var setup = addJokeSetup.value
   var punchline = addJokePunchline.value
-  var jokeKeys = Object.keys(jokes)
-  var length = jokeKeys.length
 
-  for (var i = 0; i < length; i++) {
-    if (addJokeKey === jokeKeys[i]) {
-      addBox.innerText = existingJokeFound
-      break
-    } else {
-      jokes[addJokeKey] = {'setup': setup, 'punchline': punchline}
-      addBox.innerText = addJokeKey + ': ' + setup + ' ' + punchline
+  if (jokes[addJokeKey]) {
+    addBox.innerText = existingJokeFound
+  } else {
+    jokes[addJokeKey] = {'setup': setup, 'punchline': punchline}
+    addBox.innerText = addJokeKey + ': ' + setup + ' ' + punchline
 
-      var stringifiedJokes = JSON.stringify(jokes)
-      window.localStorage.setItem('jokes', stringifiedJokes)
-    }
+    var stringifiedJokes = JSON.stringify(jokes)
+    window.localStorage.setItem('jokes', stringifiedJokes)
   }
   updatePage()
 }
@@ -81,20 +78,14 @@ var addJoke = function () {
 // REMOVE JOKE
 var removeJoke = function () {
   var discardJokeKey = dislikeJokeInput.value
-  var jokeKeys = Object.keys(jokes)
-  var length = jokeKeys.length
 
-  for (var i = 0; i < length; i++) {
-    if (discardJokeKey === jokeKeys[i]) {
-      removeBox.innerText = jokeKeys[i]
-      delete jokes[jokeKeys[i]]
-
-      var stringifiedJokes = JSON.stringify(jokes)
-      window.localStorage.setItem('jokes', stringifiedJokes)
-      break
-    } else {
-      removeBox.innerText = noJokeFound
-    }
+  if (jokes[discardJokeKey]) {
+    removeBox.innerText = existingJokeFound
+    delete jokes[discardJokeKey]
+    var stringifiedJokes = JSON.stringify(jokes)
+    window.localStorage.setItem('jokes', stringifiedJokes)
+  } else {
+    removeBox.innerText = noJokeFound
   }
   updatePage()
 }
@@ -102,17 +93,13 @@ var removeJoke = function () {
 // UPDATE JOKEBOX
 var updateDisplayedJoke = function () {
   var requestedJokeKey = requestedJokeInput.value
-  var jokeKeys = Object.keys(jokes)
-
-  var length = jokeKeys.length
-
-  for (var i = 0; i < length; i++) {
-    if (requestedJokeKey === jokeKeys[i]) {
-      jokeBox.innerText = jokes[requestedJokeKey]['setup'] + '\n\n' + jokes[requestedJokeKey]['punchline']
-      break
-    } else {
-      jokeBox.innerText = noJokeFound
-    }
+  var existingJoke = jokes[requestedJokeKey]
+  if (existingJoke) { // use truthiness to determine if joke exists
+    jokeBox.textContent = existingJoke.setup
+    jokeBox2.textContent = existingJoke.punchline
+  } else {
+    jokeBox.textContent = noJokeFound
+    jokeBox2.textContent = ' '
   }
 }
 
